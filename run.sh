@@ -22,4 +22,4 @@ docker rm kook-db
 
 # Run
 docker run -d --name kook-db redis
-docker run -d -p 5000:5000 --name kook-frontend --link kook-db:kook-db kook-frontend
+docker run -d -p 5000:5000 --name kook-frontend --link kook-db:kook-db emjburns/kook-microservice-example
