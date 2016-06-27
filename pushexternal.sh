@@ -16,8 +16,8 @@
 
 PRJ="$(cd `dirname $0`; pwd)"
 
-ARTIFACTORY=${ARTIFACTORY:=veritas}
-TAG=kook-frontend
+ARTIFACTORY=${ARTIFACTORY:=emjburns}
+TAG=kook-microservice-example
 
 # build and push to artifactory
 docker build --no-cache -t ${ARTIFACTORY}/${TAG} -f ${PRJ}/Dockerfile.dist .

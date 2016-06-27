@@ -26,16 +26,23 @@ def index():
 
 @app.route("/words")
 def getWords():
-    r = redis.StrictRedis(host=os.environ['KOOK_DB_PORT_6379_TCP_ADDR'], decode_responses=True)
+    r = getRedis()
     phrases = r.smembers("phrases")
     return phrases
 
 
 @app.route("/addPhrase", methods=['POST'])
 def addPhrase():
-    r = redis.StrictRedis(host=os.environ['KOOK_DB_PORT_6379_TCP_ADDR'], decode_responses=True)
+    r = getRedis()
+    
     r.sadd("phrases", request.form['phrase'])
     return redirect(url_for('index'))
+
+
+def getRedis():
+	return redis.StrictRedis(host=os.environ['REDIS_MASTER_SERVICE_HOST'], decode_responses=True)
+    # Uncomment to use with docker
+	# return redis.StrictRedis(host=os.environ['KOOK_DB_PORT_6379_TCP_ADDR'], decode_responses=True)
 
 
 if __name__ == "__main__":
