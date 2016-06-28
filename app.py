@@ -40,9 +40,13 @@ def addPhrase():
 
 
 def getRedis():
-	return redis.StrictRedis(host=os.environ['REDIS_MASTER_SERVICE_HOST'], decode_responses=True)
-    # Uncomment to use with docker
-	# return redis.StrictRedis(host=os.environ['KOOK_DB_PORT_6379_TCP_ADDR'], decode_responses=True)
+    try:
+        # Linking using docker
+        redisHost = os.environ['KOOK_DB_PORT_6379_TCP_ADDR']
+    except KeyError:
+        # Linking using kubernetes
+        redisHost = os.environ['REDIS_MASTER_SERVICE_HOST']
+    return redis.StrictRedis(host=redisHost, decode_responses=True)     
 
 
 if __name__ == "__main__":

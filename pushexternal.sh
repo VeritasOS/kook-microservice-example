@@ -16,9 +16,9 @@
 
 PRJ="$(cd `dirname $0`; pwd)"
 
-ARTIFACTORY=${ARTIFACTORY:=emjburns}
-TAG=kook-microservice-example
+REGISTRY=${KOOK_REGISTRY:=emjburns}
+REPOSITORY=${KOOK_REPOSITORY:=kook-microservice-example}
 
 # build and push to artifactory
-docker build --no-cache -t ${ARTIFACTORY}/${TAG} -f ${PRJ}/Dockerfile.dist .
-docker push ${ARTIFACTORY}/${TAG}:latest
+docker build --no-cache -t ${REGISTRY}/${REPOSITORY} -f ${PRJ}/Dockerfile.dist .
+docker push ${REGISTRY}/${REPOSITORY}:latest

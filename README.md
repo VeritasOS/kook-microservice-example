@@ -1,8 +1,20 @@
-# This is a sample project
-This project is (or will be) a small containerized microservice running in docker.
-It is meant to test the surf pipelines.
-It will serve as a base project to kickstart development of similar projects.
-It will be awesome.
+This is a sample project split into two pieces, each running in a docker container.
+
+The frontend (a simple python flask app) runs in one container, while the backend (a redis database) runs in another.
+
+To build and push it to the docker registry, use
+
+```
+# This script uses the env variables KOOK_REGISTRY and KOOK_REPOSITORY
+# to override push locations and tagging
+./pushexternal.sh
+```
+
+To run, use:
+```
+./run.sh [d|docker|k|kubernetes]
+```
+
 
 
 ### Naming
