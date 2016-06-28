@@ -14,12 +14,50 @@
 
 #!/bin/bash
 
-docker stop kook-frontend
-docker stop kook-db
+PRJ="$(cd `dirname $0`; pwd)"
 
-docker rm kook-frontend
-docker rm kook-db
+function runDocker()
+{
+	echo ">> launching with docker"
 
-# Run
-docker run -d --name kook-db redis
-docker run -d -p 5000:5000 --name kook-frontend --link kook-db:kook-db emjburns/kook-microservice-example
+	docker stop kook-frontend
+	docker stop kook-db
+
+	docker rm kook-frontend
+	docker rm kook-db
+
+	docker run -d --name kook-db redis
+	docker run -d -p 5000:5000 --name kook-frontend --link kook-db:kook-db emjburns/kook-microservice-example
+}
+
+function runKube(){
+	echo ">> launching with kubernetes"
+
+	kubectl delete -f ${PRJ}/kubernetes/kook-all-rms.yaml
+
+	echo ""
+	sleep 2
+
+	kubectl create -f ${PRJ}/kubernetes/kook-all-rms.yaml
+
+	echo ""
+	sleep 2
+
+	kubectl describe service kook-frontend | grep "LoadBalancer Ingress:"
+}
+
+key="$1"
+
+case $key in
+	k|kube|kubernetes)
+		runKube
+		;;
+	d|docker)
+		runDocker
+		;;
+	*)
+	 	echo $"Usage: $0 {d|docker|k|kube|kubernetes}"
+	 	echo $"Please indicate which application configuration to launch"
+	 	exit 1
+esac
+
