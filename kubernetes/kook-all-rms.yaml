@@ -135,10 +135,14 @@ spec:
     tier: frontend
     role: ui
 ---
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: v1
+kind: ReplicationController
 metadata:
   name: kook-frontend
+  labels:
+    app: kook-frontend
+    role: ui
+    tier: frontend
 spec:
   # this replicas value is default
   # modify it according to your case
