@@ -1,0 +1,6 @@
+sudo: requred
+
+language: bash
+
+scripts: 
+  - bash build.sh
